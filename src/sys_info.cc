@@ -276,7 +276,7 @@ namespace diskspd {
 				"Tried to lookup nonexistent device %u,%u in sys_info!\n",
 				major(device_id),
 				minor(device_id));
-			exit(1);
+			//exit(1);
 		}
 
 		std::string dev_name = id_to_device[device_id];
