@@ -12,7 +12,7 @@
 
 namespace diskspd {
 
-	extern bool ignore_sysinfo_problems = false;
+	extern bool ignore_sysinfo_problems;
 
 	struct SysInfo {
 
