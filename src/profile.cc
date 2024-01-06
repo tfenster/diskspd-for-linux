@@ -25,7 +25,6 @@ namespace diskspd
 	// these have to be defined somewhere! here is good
 	bool verbose(false);
 	bool debug(false);
-	bool ignore_sysinfo_problems(false);
 
 	bool Profile::parse_options(int argc, char ** argv) {
 
