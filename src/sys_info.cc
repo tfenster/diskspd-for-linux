@@ -178,7 +178,7 @@ namespace diskspd {
 			if (err) {
 				fprintf(stderr, "Unexpected error '%d: %s' when statting %s!\n", errno, strerror(errno), dev_path.c_str());
 				perror("stat");
-				exit(1);
+				//exit(1);
 			}
 			//printf("mapping %u,%u to %s\n", major(dev_stat.st_rdev), minor(dev_stat.st_rdev), str.c_str());
 			// map it for later!
@@ -311,7 +311,7 @@ namespace diskspd {
 
 		if (!schedfile.is_open()) {
 			fprintf(stderr, "Couldn't open scheduler file for device %s\n", device.c_str());
-			exit(1);
+			//exit(1);
 		}
 
 		std::getline(schedfile, line);
@@ -346,7 +346,7 @@ namespace diskspd {
 					"Tried to lookup nonexistent device %u,%u in sys_info!\n",
 					major(device_id),
 					minor(device_id));
-			exit(1);
+			//exit(1);
 		}
 
 		std::string line;
@@ -354,7 +354,7 @@ namespace diskspd {
 
 		if (!sizefile.is_open()) {
 			fprintf(stderr, "Couldn't open size file for device\n");
-			exit(1);
+			//exit(1);
 		}
 
 		std::getline(sizefile, line);
