@@ -71,6 +71,12 @@ namespace diskspd
 		// this dummy and then apply it to all the targets at the end
 		Target dummy("");
 
+		// -i
+		if (options.get_arg(INGORE_SYSINFO_PROBLEMS)) {
+			v_printf("Warning: Ignore all sys-info problems!\n");
+			ignore_sysinfo_problems = true;
+		}
+
 		// -a
 
 		// initialize SysInfo struct
@@ -123,12 +129,6 @@ namespace diskspd
 
 		// -g
 		options.arg_to_number<off_t>(MAX_THROUGHPUT, dummy.block_size, &dummy.max_throughput);
-
-		// -i
-		if (options.get_arg(INGORE_SYSINFO_PROBLEMS)) {
-			v_printf("Warning: Ignore all sys-info problems!\n");
-			ignore_sysinfo_problems = true;
-		}
 
 		// -L
 		if (options.get_arg(LATENCY)) {
