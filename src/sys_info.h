@@ -12,6 +12,8 @@
 
 namespace diskspd {
 
+	extern bool ignore_sysinfo_problems = false;
+
 	struct SysInfo {
 
 		unsigned int cpulo = 0;	// lowest id

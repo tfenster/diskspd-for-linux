@@ -25,6 +25,7 @@ namespace diskspd
 	// these have to be defined somewhere! here is good
 	bool verbose(false);
 	bool debug(false);
+	bool ignore_sysinfo_problems(false);
 
 	bool Profile::parse_options(int argc, char ** argv) {
 
@@ -122,6 +123,11 @@ namespace diskspd
 
 		// -g
 		options.arg_to_number<off_t>(MAX_THROUGHPUT, dummy.block_size, &dummy.max_throughput);
+
+		// -i
+		if (options.get_arg(INGORE_SYSINFO_PROBLEMS)) {
+			ignore_sysinfo_problems = true;
+		}
 
 		// -L
 		if (options.get_arg(LATENCY)) {

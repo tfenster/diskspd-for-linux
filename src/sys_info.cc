@@ -175,10 +175,10 @@ namespace diskspd {
 		for (auto& str : block_devices) {
 			dev_path = "/dev/" + str;
 			int err = stat(dev_path.c_str(), &dev_stat);
-			if (err) {
+			if (err && !ignore_sysinfo_problems) {
 				fprintf(stderr, "Unexpected error '%d: %s' when statting %s!\n", errno, strerror(errno), dev_path.c_str());
 				perror("stat");
-				//exit(1);
+				exit(1);
 			}
 			//printf("mapping %u,%u to %s\n", major(dev_stat.st_rdev), minor(dev_stat.st_rdev), str.c_str());
 			// map it for later!
@@ -270,13 +270,13 @@ namespace diskspd {
 		// "block", we know that the original name is the device name, so just return that
 		
 		// this shouldn't happen if sys-info's been initialized properly
-		if (!id_to_device.count(device_id)) {
+		if (!id_to_device.count(device_id) && ! ignore_sysinfo_problems) {
 			fprintf(
 				stderr,
 				"Tried to lookup nonexistent device %u,%u in sys_info!\n",
 				major(device_id),
 				minor(device_id));
-			//exit(1);
+			exit(1);
 		}
 
 		std::string dev_name = id_to_device[device_id];
@@ -284,10 +284,10 @@ namespace diskspd {
 		std::string linkpath = "/sys/class/block/" + dev_name;
 		char the_link[PATH_MAX+1] = {0};
 		ssize_t link_size = readlink(linkpath.c_str(), the_link, PATH_MAX);
-		if (link_size == -1) {
+		if (link_size == -1 && ! ignore_sysinfo_problems) {
 			fprintf(stderr, "Error reading link!\n");
 			perror("readlink");
-			//exit(1);
+			exit(1);
 		}
 		// add null terminator; readlink has few guarantees
 		the_link[link_size] = '\0';
@@ -309,9 +309,9 @@ namespace diskspd {
 		std::string line;
 		std::ifstream schedfile(std::string("/sys/block/"+device+"/queue/scheduler"));
 
-		if (!schedfile.is_open()) {
+		if (!schedfile.is_open() && ! ignore_sysinfo_problems) {
 			fprintf(stderr, "Couldn't open scheduler file for device %s\n", device.c_str());
-			//exit(1);
+			exit(1);
 		}
 
 		std::getline(schedfile, line);
@@ -340,21 +340,21 @@ namespace diskspd {
 	}
 
 	off_t SysInfo::partition_size(dev_t device_id) {
-		if (!id_to_device.count(device_id)) {
+		if (!id_to_device.count(device_id) && ! ignore_sysinfo_problems) {
 			fprintf(
 					stderr,
 					"Tried to lookup nonexistent device %u,%u in sys_info!\n",
 					major(device_id),
 					minor(device_id));
-			//exit(1);
+			exit(1);
 		}
 
 		std::string line;
 		std::ifstream sizefile("/sys/class/block/" + id_to_device[device_id] + "/size");
 
-		if (!sizefile.is_open()) {
+		if (!sizefile.is_open() && ! ignore_sysinfo_problems) {
 			fprintf(stderr, "Couldn't open size file for device\n");
-			//exit(1);
+			exit(1);
 		}
 
 		std::getline(sizefile, line);

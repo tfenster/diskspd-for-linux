@@ -31,6 +31,7 @@ namespace diskspd {
 		THREADS_PER_TARGET,
 		THREAD_STRIDE,
 		VERBOSE,
+		INGORE_SYSINFO_PROBLEMS,
 		IO_ENGINE,
 		WRITE,
 		WARMUP_TIME,
@@ -332,6 +333,24 @@ namespace diskspd {
 									"number of bytes, KiB(K), MiB(M), GiB(G) or blocks(b) per "
 									"millisecond. NOTE: this option has varying accuracy depending "
 									"on number of threads (-t/-F) and cpu usage.\n",
+								group:0
+							}
+						}
+					},
+					{
+						(int)'i',
+						{
+							type: INGORE_SYSINFO_PROBLEMS,
+							flags: 0,
+							arg: "",
+							opt:
+							{
+								name:"ignore-sysinfo-problems",
+								key:(int)'i',
+								arg:nullptr,
+								flags:0,
+								doc:
+									"Ignore any sys-info problems\n",
 								group:0
 							}
 						}
