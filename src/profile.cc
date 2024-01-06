@@ -126,6 +126,7 @@ namespace diskspd
 
 		// -i
 		if (options.get_arg(INGORE_SYSINFO_PROBLEMS)) {
+			v_printf("Warning: Ignore all sys-info problems!\n");
 			ignore_sysinfo_problems = true;
 		}
 
