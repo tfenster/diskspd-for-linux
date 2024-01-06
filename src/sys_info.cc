@@ -287,7 +287,7 @@ namespace diskspd {
 		if (link_size == -1) {
 			fprintf(stderr, "Error reading link!\n");
 			perror("readlink");
-			exit(1);
+			//exit(1);
 		}
 		// add null terminator; readlink has few guarantees
 		the_link[link_size] = '\0';
